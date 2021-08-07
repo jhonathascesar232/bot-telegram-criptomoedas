@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .bot import bot
 from django_tgbot.types.update import Update
-from cotacaodecriptomoedasbot.credencials import BOT_TOKEN
+from . import bot_token
 
 import logging
 
@@ -40,10 +40,10 @@ def poll_updates(request):
 def set_my_webhook(request):
     import telebot
 
-    bot = telebot.TeleBot(BOT_TOKEN)
+    bot = telebot.TeleBot(bot_token)
     bot.remove_webhook()
     bot.set_webhook(
-        url='https://bot-telegram-cotacao.herokuapp.com/' + BOT_TOKEN
+        url='https://bot-telegram-cotacao.herokuapp.com/' + bot_token
     )
     # bot.setWebhook(url='https://bot-telegram-cotacao.herokuapp.com/')
     return HttpResponse("Webhook: OK")
