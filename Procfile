@@ -1,1 +1,1 @@
-web: gunicorn bot_telegram.wsgi --log-file-
+web: gunicorn bot_telegram.wsgi --log-file -
