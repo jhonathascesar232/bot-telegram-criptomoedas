@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-x31l-tbc009_g#rh!p-g#3@prf_)-r2mzjli9lw)px0y$qr1^_
 # SECURITY WARNING: don't run with debug turned on in production!
 
 env = Env()
-env.read_env(f"{BASE_DIR}/.env", recurse=False)
+env.read_env(f"{BASE_DIR}/contrib/.config", recurse=False)
 DEBUG = env.str("DEBUG", default=False)
 
 ALLOWED_HOSTS = ["*"]
