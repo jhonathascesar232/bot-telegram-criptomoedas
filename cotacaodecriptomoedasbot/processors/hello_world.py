@@ -20,18 +20,11 @@ def dados_da_msn(update):
     if palavras == None:
         data['palavras'] = False
     else:
-        palavras = palavras.get_text().split(" ")
-
-    chat_id = update.get_chat().get_id()
-    comando = palavras[0]
-    mensagem = " ".join(palavras[1:]) if len(palavras) > 1 else False
-
-    data = {
-        'palavras': palavras,
-        'chat_id': chat_id,
-        'comando': comando,
-        'mensagem': mensagem
-    }
+        data['palavras'] = palavras.get_text().split(" ")
+        data['chat_id'] = update.get_chat().get_id()
+        data['comando'] = palavras[0]
+        data['mensagem'] = " ".join(
+            palavras[1:]) if len(palavras) > 1 else False
 
     return data
 
@@ -51,19 +44,19 @@ def hello_world(bot, update: Update, state: TelegramState):
     dados = dados_da_msn(update)
     if data['palavras'] == False:
         print('Informe algum comando!')
+    else:
+        comando = dados['comando'].lower()
+        chat_id = dados['chat_id']
 
-    comando = dados['comando'].lower()
-    chat_id = dados['chat_id']
+        if comando == '/start':
+            response = helloWorld()
+        if comando == '/infocep':
+            cep = dados['mensagem']
+            dic = buscaCep(cep)
 
-    if comando == '/start':
-        response = helloWorld()
-    if comando == '/infocep':
-        cep = dados['mensagem']
-        dic = buscaCep(cep)
+            response = 'Cep: {}\n'.format(dic['cep'])
+            response += 'Logradouro: {}\n'.format(dic['logradouro'])
+            response += 'Bairro: {}\n'.format(dic['bairro'])
+            response += 'Cidade: {}'.format(dic['cidade'])
 
-        response = 'Cep: {}\n'.format(dic['cep'])
-        response += 'Logradouro: {}\n'.format(dic['logradouro'])
-        response += 'Bairro: {}\n'.format(dic['bairro'])
-        response += 'Cidade: {}'.format(dic['cidade'])
-
-    bot.sendMessage(chat_id, response)
+        bot.sendMessage(chat_id, response)
