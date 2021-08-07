@@ -42,7 +42,7 @@ def helloWorld():
 @processor(state_manager, from_states=state_types.All)
 def hello_world(bot, update: Update, state: TelegramState):
     dados = dados_da_msn(update)
-    if data['palavras'] == False:
+    if dados['palavras'] == False:
         print('Informe algum comando!')
     else:
         comando = dados['comando'].lower()
