@@ -12,6 +12,7 @@ requests = "*"
 environs = "*"
 dj-database-url = "*"
 psycopg2 = "*"
+pytelegrambotapi = "*"
 
 [dev-packages]
 
