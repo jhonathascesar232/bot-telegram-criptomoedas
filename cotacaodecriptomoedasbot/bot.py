@@ -34,7 +34,4 @@ def import_processors():
 state_manager = StateManager()
 bot = TelegramBot(bot_token, state_manager)
 
-###
-bot.setMyCommands(commands=['/hello'])
-##
 import_processors()

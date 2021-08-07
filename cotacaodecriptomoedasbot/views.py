@@ -37,5 +37,5 @@ def poll_updates(request):
 
 
 def set_my_webhook(request):
-    bot.set_webhook(url='https://bot-telegram-cotacao.herokuapp.com/')
+    bot.setWebhook(url='https://bot-telegram-cotacao.herokuapp.com/')
     return HttpResponse({"Webhook": "OK"})
