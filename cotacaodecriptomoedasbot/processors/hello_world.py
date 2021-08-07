@@ -18,7 +18,7 @@ def dados_da_msn(update):
 
     palavras = update.get_message()
     if palavras == None:
-        return 'NULL'
+        data['palavras'] = False
     else:
         palavras = palavras.get_text().split(" ")
 
@@ -49,6 +49,9 @@ def helloWorld():
 @processor(state_manager, from_states=state_types.All)
 def hello_world(bot, update: Update, state: TelegramState):
     dados = dados_da_msn(update)
+    if data['palavras'] == False:
+        print('Informe algum comando!')
+
     comando = dados['comando'].lower()
     chat_id = dados['chat_id']
 
