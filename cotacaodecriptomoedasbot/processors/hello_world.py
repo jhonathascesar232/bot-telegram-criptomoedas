@@ -16,7 +16,12 @@ def inverte_texto(mensagem):
 def dados_da_msn(update):
     data = {}
 
-    palavras = update.get_message().get_text().split(" ")
+    palavras = update.get_message()
+    if palavras == None:
+        return 'NULL'
+    else:
+        palavras = palavras.get_text().split(" ")
+
     chat_id = update.get_chat().get_id()
     comando = palavras[0]
     mensagem = " ".join(palavras[1:]) if len(palavras) > 1 else False
