@@ -10,6 +10,8 @@ gunicorn = "*"
 django-heroku = "*"
 requests = "*"
 environs = "*"
+dj-database-url = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
