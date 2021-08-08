@@ -27,8 +27,12 @@ def dados_da_msn(update):
         data['chat_id'] = update.get_chat().get_id()
         # pprint(data)
         data['comando'] = palavras[0]
+
         data['mensagem'] = " ".join(
             palavras[1:]) if len(palavras) > 1 else False
+
+        if data['mensagem'] == False:
+            return data
 
     return data
 
@@ -55,12 +59,15 @@ def hello_world(bot, update: Update, state: TelegramState):
         if comando == '/start':
             response = helloWorld()
         if comando == '/infocep':
-            cep = dados['mensagem']
-            dic = buscaCep(cep)
+            if data['mensagem'] == False:
+                response = 'INFO: /infocep (numero do cep)!'
+            else:
+                cep = dados['mensagem']
+                dic = buscaCep(cep)
 
-            response = 'Cep: {}\n'.format(dic['cep'])
-            response += 'Logradouro: {}\n'.format(dic['logradouro'])
-            response += 'Bairro: {}\n'.format(dic['bairro'])
-            response += 'Cidade: {}'.format(dic['cidade'])
+                response = 'Cep: {}\n'.format(dic['cep'])
+                response += 'Logradouro: {}\n'.format(dic['logradouro'])
+                response += 'Bairro: {}\n'.format(dic['bairro'])
+                response += 'Cidade: {}'.format(dic['cidade'])
 
         bot.sendMessage(chat_id, response)
