@@ -58,7 +58,7 @@ def hello_world(bot, update: Update, state: TelegramState):
 
         if comando == '/start':
             response = '{} {}'.format(
-                helloWorld(), (update.get_message().get_user())
+                helloWorld(), (update.get_chat().get_username())
             )
         if comando == '/infocep':
             if dados['mensagem'] == False:
