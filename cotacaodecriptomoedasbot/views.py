@@ -47,3 +47,12 @@ def set_my_webhook(request):
     )
     # bot.setWebhook(url='https://bot-telegram-cotacao.herokuapp.com/')
     return HttpResponse("Webhook: OK")
+
+
+def delete_my_webhook(request):
+    import telebot
+
+    bot = telebot.TeleBot(bot_token)
+    bot.remove_webhook()
+    # bot.setWebhook(url='https://bot-telegram-cotacao.herokuapp.com/')
+    return HttpResponse("Webhook deleted: OK")
