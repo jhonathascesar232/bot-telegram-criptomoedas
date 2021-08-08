@@ -14,14 +14,18 @@ def inverte_texto(mensagem):
 
 
 def dados_da_msn(update):
+    from pprint import pprint
+
     data = {}
 
     palavras = update.get_message()
     if palavras == None:
         data['palavras'] = False
     else:
-        data['palavras'] = palavras.get_text().split(" ")
+        palavras = palavras.get_text().split(" ")
+        data['palavras'] = palavras
         data['chat_id'] = update.get_chat().get_id()
+        # pprint(data)
         data['comando'] = palavras[0]
         data['mensagem'] = " ".join(
             palavras[1:]) if len(palavras) > 1 else False
