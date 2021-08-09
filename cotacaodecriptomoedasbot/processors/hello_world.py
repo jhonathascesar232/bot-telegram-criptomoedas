@@ -81,7 +81,8 @@ def hello_world(bot, update: Update, state: TelegramState):
                 response += 'Cidade: {}'.format(dic['cidade'])
             else:
                 response = 'INFO: /infocep (numero do cep)!'
+        bot.sendMessage(chat_id, response)
+        return
     except Exception as e:
         logging.error(f'Erro: {e}')
-    finally:
-        bot.sendMessage(chat_id, response)
+        return
