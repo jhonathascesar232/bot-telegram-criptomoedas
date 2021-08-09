@@ -68,19 +68,20 @@ def hello_world(bot, update: Update, state: TelegramState):
 
         if comando == '/start':
             response = '{} {}'.format(
-                helloWorld(), (update.get_chat().get_username())
+                helloWorld(),
+                (update.get_chat().get_username())
             )
         if comando == '/infocep':
-            if dados['mensagem'] == False:
-                response = 'INFO: /infocep (numero do cep)!'
-            else:
+            if dados['mensagem']:
                 cep = dados['mensagem']
                 dic = buscaCep(cep)
-
                 response = 'Cep: {}\n'.format(dic['cep'])
                 response += 'Logradouro: {}\n'.format(dic['logradouro'])
                 response += 'Bairro: {}\n'.format(dic['bairro'])
                 response += 'Cidade: {}'.format(dic['cidade'])
+            else:
+                response = 'INFO: /infocep (numero do cep)!'
     except Exception as e:
         logging.error(f'Erro: {e}')
-    bot.sendMessage(chat_id, response)
+    finally:
+        bot.sendMessage(chat_id, response)
