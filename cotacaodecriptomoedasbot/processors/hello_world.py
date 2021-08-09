@@ -5,6 +5,17 @@ from cotacaodecriptomoedasbot.bot import state_manager
 from cotacaodecriptomoedasbot.models import TelegramState
 from cotacaodecriptomoedasbot.bot import TelegramBot
 
+import logging
+
+logging.basicConfig(
+    filename='log.log',
+    level=logging.DEBUG,
+    format='%(levelname)s %(asctime)s: %(message)s',
+    datefmt='%d/%m/%Y %H:%M:%S'
+)
+logger = logging.StreamHandler()
+logging.getLogger('').addHandler(logger)
+
 
 def inverte_texto(mensagem):
     '''
@@ -50,26 +61,28 @@ def helloWorld():
 @processor(state_manager, from_states=state_types.All)
 def hello_world(bot, update: Update, state: TelegramState):
     dados = dados_da_msn(update)
-    if dados['palavras'] == False:
-        print('Informe algum comando!')
-    else:
-        comando = dados['comando'].lower()
-        chat_id = dados['chat_id']
 
-        if comando == '/start':
-            response = '{} {}'.format(
-                helloWorld(), (update.get_chat().get_username())
-            )
-        if comando == '/infocep':
-            if dados['mensagem'] == False:
-                response = 'INFO: /infocep (numero do cep)!'
-            else:
-                cep = dados['mensagem']
-                dic = buscaCep(cep)
+    try:
+        if dados['palavras'] != False:
+            comando = dados['comando'].lower()
+            chat_id = dados['chat_id']
 
-                response = 'Cep: {}\n'.format(dic['cep'])
-                response += 'Logradouro: {}\n'.format(dic['logradouro'])
-                response += 'Bairro: {}\n'.format(dic['bairro'])
-                response += 'Cidade: {}'.format(dic['cidade'])
+            if comando == '/start':
+                response = '{} {}'.format(
+                    helloWorld(), (update.get_chat().get_username())
+                )
+            if comando == '/infocep':
+                if dados['mensagem'] == False:
+                    response = 'INFO: /infocep (numero do cep)!'
+                else:
+                    cep = dados['mensagem']
+                    dic = buscaCep(cep)
+
+                    response = 'Cep: {}\n'.format(dic['cep'])
+                    response += 'Logradouro: {}\n'.format(dic['logradouro'])
+                    response += 'Bairro: {}\n'.format(dic['bairro'])
+                    response += 'Cidade: {}'.format(dic['cidade'])
+    except Exception as e:
+        logging.error(f'Erro: {e}')
 
         bot.sendMessage(chat_id, response)
