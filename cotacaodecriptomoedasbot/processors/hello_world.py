@@ -82,5 +82,5 @@ def hello_world(bot, update: Update, state: TelegramState):
                 response += 'Bairro: {}\n'.format(dic['bairro'])
                 response += 'Cidade: {}'.format(dic['cidade'])
     except Exception as e:
-
-        bot.sendMessage(chat_id, response)
+        logging.error(f'Erro: {e}')
+    bot.sendMessage(chat_id, response)
