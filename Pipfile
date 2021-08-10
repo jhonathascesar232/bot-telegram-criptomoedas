@@ -13,8 +13,10 @@ environs = "*"
 dj-database-url = "*"
 psycopg2 = "*"
 pytelegrambotapi = "*"
+pycoingecko = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.9"
