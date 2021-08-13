@@ -2,7 +2,7 @@ from django_tgbot.decorators import processor
 from django_tgbot.state_manager import message_types, update_types, state_types
 from django_tgbot.types.update import Update
 from cotacaodecriptomoedasbot.bot import state_manager
-from cotacaodecriptomoedasbot.models import TelegramState
+from cotacaodecriptomoedasbot.models import TelegramState, TelegramUser
 from cotacaodecriptomoedasbot.bot import TelegramBot
 
 import logging
@@ -58,6 +58,22 @@ def helloWorld():
     return 'Hello, eu sou um bot!'
 
 
+def cadastro_de_clientes():
+    response = 'Deseje se cadastrar para receber atualizações?'
+
+
+def resposta_comando_help():
+    return f'''
+    /listar (Todas as moedas) -> Esse comando faz a listagem
+    /buscar (Moeda) -> Esse comando faz a busca por uma moeda
+    /cadastrar
+    /infocep (Cep)-> Esse comando faz informações do CEP
+
+    ex.:
+    /infocep 00000000
+    '''
+
+
 @processor(state_manager, from_states=state_types.All)
 def hello_world(bot, update: Update, state: TelegramState):
     dados = dados_da_msn(update)
@@ -65,12 +81,16 @@ def hello_world(bot, update: Update, state: TelegramState):
     try:
         comando = dados['comando'].lower()
         chat_id = dados['chat_id']
-
+        # comando de inicio
         if comando == '/start':
             response = '{} {}'.format(
                 helloWorld(),
                 (update.get_chat().get_username())
             )
+        # comando de Help
+        if comando == '/help':
+            response = resposta_comando_help()
+        # comando de informações de CEP
         if comando == '/infocep':
             if dados['mensagem']:
                 cep = dados['mensagem']
@@ -81,6 +101,7 @@ def hello_world(bot, update: Update, state: TelegramState):
                 response += 'Cidade: {}'.format(dic['cidade'])
             else:
                 response = 'INFO: /infocep (numero do cep)!'
+        # envia a mensagem
         bot.sendMessage(chat_id, response)
         return
     except Exception as e:

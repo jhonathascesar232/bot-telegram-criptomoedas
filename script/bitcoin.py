@@ -3,13 +3,7 @@ from pycoingecko import CoinGeckoAPI
 cg = CoinGeckoAPI()
 
 
-class Bitcoin:
-    """docstring for Bitcoin"""
-
-    def __init__(self, cg):
-        self.cg = cg
-        self.name = 'bitcoin'
-
-
-if __name__ == '__main__':
-    b = Bitcoin()
+def get_preco(moeda_id: str):
+    dic = cg.get_price(moeda_id,  vs_currencies='brl')
+    moeda['nome'] = dic.keys()[0]
+    moeda['preco'] = dic.values()[0]

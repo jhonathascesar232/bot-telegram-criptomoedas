@@ -11,7 +11,7 @@ def test_get_coins_list():
     Testa se o tamanho é igual
     '''
     lista_de_moedas = cg.get_coins_list()
-    total_moedas = 8828
+    total_moedas = 8879
 
     LOGGER.info('Total Moedas: {}'.format(total_moedas))
     assert len(lista_de_moedas) == total_moedas
@@ -65,3 +65,8 @@ def test_get_coins_markets_igual_name():
     markets = cg.get_coins_markets('brl')
     dogecoin = [moeda for moeda in markets if moeda['id'] == 'dogecoin'][0]
     assert DOGECOIN['name'] == dogecoin['name']
+
+
+def test_get_price():
+    preco_bitcoin = cg.get_price(ids='bitcoin', vs_currencies='brl')
+    assert 'bitcoin' in preco_bitcoin.keys()
